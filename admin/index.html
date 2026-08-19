@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Nvshitostore</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/img/logo.png">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginView" class="login-view">
+  <div class="login-card">
+    <img src="/img/logo.png" alt="" class="login-logo">
+    <h1>Panel admin</h1>
+    <form id="loginForm">
+      <label>Contraseña
+        <input type="password" id="password" required autocomplete="current-password">
+      </label>
+      <button type="submit">Entrar</button>
+      <p class="form-error" id="loginError" hidden></p>
+    </form>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboardView" class="dashboard-view" hidden>
+  <header class="admin-topbar">
+    <a href="/" class="brand">
+      <img src="/img/logo.png" alt="" class="brand-logo">
+      <span class="brand-name">NVSHITO<em>STORE</em></span>
+    </a>
+    <button id="logoutBtn" class="btn-ghost" type="button">Cerrar sesión</button>
+  </header>
+
+  <main class="admin-main">
+    <section class="upload-card">
+      <h2>Subir producto</h2>
+      <form id="uploadForm">
+        <label class="dropzone" id="dropzone" for="imageInput">
+          <input type="file" id="imageInput" accept="image/*" hidden>
+          <span id="dropzoneEmpty">Arrastra una foto o haz clic para elegirla</span>
+          <img id="previewImg" hidden alt="">
+        </label>
+
+        <label>Nombre
+          <input type="text" id="name" placeholder="Ej: Hoodie Hellstar Records" required>
+        </label>
+
+        <label>Categoría
+          <select id="category" required>
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option value="pantalones">Pantalones</option>
+            <option value="polerones">Polerones</option>
+            <option value="poleras">Poleras</option>
+            <option value="accesorios">Accesorios</option>
+          </select>
+        </label>
+
+        <label>Precio
+          <input type="text" id="price" placeholder="Ej: 25000 (opcional)">
+        </label>
+
+        <label>Descripción
+          <textarea id="description" rows="3" placeholder="Detalles del producto (opcional)"></textarea>
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="inStock" checked>
+          <span>Disponible en stock</span>
+        </label>
+
+        <button type="submit" id="uploadBtn">Publicar producto</button>
+        <p class="form-error" id="uploadError" hidden></p>
+        <p class="form-success" id="uploadSuccess" hidden>Producto publicado.</p>
+      </form>
+    </section>
+
+    <section class="products-card">
+      <div class="products-header">
+        <h2>Productos <span class="count-pill" id="productCount">0</span></h2>
+        <select id="filterCategory">
+          <option value="">Todas las categorías</option>
+          <option value="pantalones">Pantalones</option>
+          <option value="polerones">Polerones</option>
+          <option value="poleras">Poleras</option>
+          <option value="accesorios">Accesorios</option>
+        </select>
+      </div>
+      <div class="products-list" id="productsList"></div>
+    </section>
+  </main>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

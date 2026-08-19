@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nvshitostore — Catálogo</title>
+<meta name="description" content="Catálogo de Nvshitostore: pantalones, polerones, poleras y accesorios.">
+<link rel="icon" href="/img/logo.png">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand">
+    <img src="/img/logo.png" alt="" class="brand-logo">
+    <span class="brand-name">NVSHITO<em>STORE</em></span>
+  </a>
+  <nav class="cat-nav" id="catNav">
+    <button data-cat="" class="active">Todo</button>
+    <button data-cat="pantalones">Pantalones</button>
+    <button data-cat="polerones">Polerones</button>
+    <button data-cat="poleras">Poleras</button>
+    <button data-cat="accesorios">Accesorios</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Catálogo</h1>
+    <p>Piezas subidas directo desde la tienda. Lo que aparece disponible, es porque hay stock real.</p>
+  </section>
+
+  <section class="grid" id="productGrid" aria-live="polite"></section>
+  <p class="empty-state" id="emptyState" hidden>Todavía no hay productos en esta categoría.</p>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Nvshitostore — Pedidos por Instagram <a href="https://instagram.com/nvshitostore" target="_blank" rel="noopener">@nvshitostore</a></p>
+</footer>
+
+<script src="/js/catalog.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
