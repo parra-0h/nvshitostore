@@ -26,13 +26,13 @@ async function checkSession() {
 }
 
 function showLogin() {
-  loginView.hidden = false;
-  dashboardView.hidden = true;
+  loginView.style.display = 'flex';
+  dashboardView.style.display = 'none';
 }
 
 function showDashboard() {
-  loginView.hidden = true;
-  dashboardView.hidden = false;
+  loginView.style.display = 'none';
+  dashboardView.style.display = 'block';
   loadProducts();
 }
 
