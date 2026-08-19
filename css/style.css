@@ -73,17 +73,11 @@ img { max-width: 100%; display: block; }
   object-fit: cover;
 }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 20px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.brand-name em {
-  font-style: normal;
-  color: var(--red);
+.brand-name-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .cat-nav {
