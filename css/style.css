@@ -16,9 +16,13 @@
   --maxw: 1180px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -28,19 +32,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 :focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 2px;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   color: inherit;
 }
 
-img { max-width: 100%; display: block; }
+img {
+  max-width: 100%;
+  display: block;
+}
 
 /* ---------- Topbar ---------- */
 .topbar {
@@ -74,10 +86,12 @@ img { max-width: 100%; display: block; }
 }
 
 .brand-name-logo {
-  height: 28px;
+  height: 65px;
   width: auto;
   object-fit: contain;
   display: block;
+  mix-blend-mode: screen;
+  filter: invert(1);
 }
 
 .cat-nav {
@@ -187,7 +201,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 2px;
   text-transform: uppercase;
   padding: 5px 40px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .4);
 }
 
 .card-body {
@@ -245,7 +259,9 @@ footer a {
   text-decoration: none;
 }
 
-footer a:hover { text-decoration: underline; }
+footer a:hover {
+  text-decoration: underline;
+}
 
 /* =====================================================
    ADMIN
@@ -319,7 +335,9 @@ textarea:focus {
   border-color: var(--red);
 }
 
-textarea { resize: vertical; }
+textarea {
+  resize: vertical;
+}
 
 .login-card button[type="submit"],
 .upload-card button[type="submit"] {
@@ -380,7 +398,10 @@ textarea { resize: vertical; }
   cursor: pointer;
 }
 
-.btn-ghost:hover { border-color: var(--red); color: var(--text); }
+.btn-ghost:hover {
+  border-color: var(--red);
+  color: var(--text);
+}
 
 .admin-main {
   max-width: var(--maxw);
@@ -393,10 +414,13 @@ textarea { resize: vertical; }
 }
 
 @media (max-width: 860px) {
-  .admin-main { grid-template-columns: 1fr; }
+  .admin-main {
+    grid-template-columns: 1fr;
+  }
 }
 
-.upload-card, .products-card {
+.upload-card,
+.products-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -409,10 +433,13 @@ textarea { resize: vertical; }
 }
 
 @media (max-width: 860px) {
-  .upload-card { position: static; }
+  .upload-card {
+    position: static;
+  }
 }
 
-.upload-card h2, .products-card h2 {
+.upload-card h2,
+.products-card h2 {
   font-family: var(--font-display);
   font-size: 20px;
   letter-spacing: .5px;
@@ -445,7 +472,10 @@ textarea { resize: vertical; }
   gap: 10px !important;
 }
 
-.checkbox-row input { width: 16px; height: 16px; }
+.checkbox-row input {
+  width: 16px;
+  height: 16px;
+}
 
 .dropzone {
   border: 1.5px dashed var(--border);
@@ -461,7 +491,10 @@ textarea { resize: vertical; }
   transition: border-color .15s ease, background .15s ease;
 }
 
-.dropzone.drag { border-color: var(--red); background: #1f1414; }
+.dropzone.drag {
+  border-color: var(--red);
+  background: #1f1414;
+}
 
 .dropzone span {
   font-size: 12px;
@@ -519,7 +552,10 @@ textarea { resize: vertical; }
   transition: opacity .15s ease;
 }
 
-.product-row.is-saving { opacity: .5; pointer-events: none; }
+.product-row.is-saving {
+  opacity: .5;
+  pointer-events: none;
+}
 
 .row-thumb {
   width: 56px;
@@ -529,7 +565,9 @@ textarea { resize: vertical; }
   background: #111;
 }
 
-.row-info { min-width: 0; }
+.row-info {
+  min-width: 0;
+}
 
 .row-cat {
   font-size: 10px;
@@ -565,7 +603,10 @@ textarea { resize: vertical; }
   cursor: pointer;
 }
 
-.row-delete:hover { border-color: var(--red); color: var(--red); }
+.row-delete:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
 
 /* Switch */
 .switch {
@@ -604,10 +645,10 @@ textarea { resize: vertical; }
   transition: transform .15s ease;
 }
 
-.switch input:checked + .switch-track {
+.switch input:checked+.switch-track {
   background: var(--red);
 }
 
-.switch input:checked + .switch-track .switch-thumb {
+.switch input:checked+.switch-track .switch-thumb {
   transform: translateX(18px);
 }
