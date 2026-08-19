@@ -2,14 +2,11 @@ name = "nvshitostore-catalog"
 pages_build_output_dir = "."
 compatibility_date = "2026-01-01"
 
-# Base de datos D1 donde se guardan los productos.
-# Reemplaza database_id por el que te entregue `wrangler d1 create`.
 [[d1_databases]]
 binding = "DB"
 database_name = "nvshitostore-db"
-database_id = "REEMPLAZA_CON_TU_DATABASE_ID"
+database_id = "a81dccc4-5f52-4080-b4c4-72a9411c355b"
 
-# Bucket R2 donde se guardan las fotos de los productos.
 [[r2_buckets]]
 binding = "CATALOG_IMAGES"
 bucket_name = "nvshitostore-images"
