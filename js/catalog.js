@@ -70,6 +70,18 @@ function buildCard(product) {
   name.className = 'card-name';
   name.textContent = product.name;
 
+  if (product.description) {
+    const desc = document.createElement('p');
+    desc.className = 'card-desc';
+    desc.textContent = product.description;
+    body.appendChild(cat);
+    body.appendChild(name);
+    body.appendChild(desc);
+  } else {
+    body.appendChild(cat);
+    body.appendChild(name);
+  }
+
   const row = document.createElement('div');
   row.className = 'card-row';
 
@@ -78,8 +90,6 @@ function buildCard(product) {
   price.textContent = product.price ? `$${product.price}` : 'Consultar';
   row.appendChild(price);
 
-  body.appendChild(cat);
-  body.appendChild(name);
   body.appendChild(row);
 
   card.appendChild(media);

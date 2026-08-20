@@ -209,6 +209,12 @@ function buildRow(product) {
   info.appendChild(cat);
   info.appendChild(name);
   info.appendChild(price);
+  if (product.description) {
+    const desc = document.createElement('p');
+    desc.className = 'row-desc';
+    desc.textContent = product.description;
+    info.appendChild(desc);
+  }
 
   const label = document.createElement('label');
   label.className = 'switch';
