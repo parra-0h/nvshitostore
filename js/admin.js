@@ -210,10 +210,31 @@ function buildRow(product) {
   info.appendChild(name);
   info.appendChild(price);
   if (product.description) {
+    const LIMIT = 60;
+    const isLong = product.description.length > LIMIT;
+
     const desc = document.createElement('p');
     desc.className = 'row-desc';
-    desc.textContent = product.description;
+    desc.textContent = isLong
+      ? product.description.slice(0, LIMIT).trimEnd() + '…'
+      : product.description;
     info.appendChild(desc);
+
+    if (isLong) {
+      const toggle = document.createElement('button');
+      toggle.className = 'row-desc-toggle';
+      toggle.textContent = 'Ver más';
+      let open = false;
+      toggle.addEventListener('click', () => {
+        open = !open;
+        desc.textContent = open
+          ? product.description
+          : product.description.slice(0, LIMIT).trimEnd() + '…';
+        desc.style.whiteSpace = open ? 'normal' : '';
+        toggle.textContent = open ? 'Ver menos' : 'Ver más';
+      });
+      info.appendChild(toggle);
+    }
   }
 
   const label = document.createElement('label');

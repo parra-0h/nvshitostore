@@ -71,12 +71,34 @@ function buildCard(product) {
   name.textContent = product.name;
 
   if (product.description) {
+    const LIMIT = 80;
+    const isLong = product.description.length > LIMIT;
+
     const desc = document.createElement('p');
-    desc.className = 'card-desc';
-    desc.textContent = product.description;
+    desc.className = 'card-desc expanded';
+    desc.textContent = isLong
+      ? product.description.slice(0, LIMIT).trimEnd() + '…'
+      : product.description;
+
     body.appendChild(cat);
     body.appendChild(name);
     body.appendChild(desc);
+
+    if (isLong) {
+      const toggle = document.createElement('button');
+      toggle.className = 'desc-toggle';
+      toggle.textContent = 'Ver más';
+      let open = false;
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        open = !open;
+        desc.textContent = open
+          ? product.description
+          : product.description.slice(0, LIMIT).trimEnd() + '…';
+        toggle.textContent = open ? 'Ver menos' : 'Ver más';
+      });
+      body.appendChild(toggle);
+    }
   } else {
     body.appendChild(cat);
     body.appendChild(name);
