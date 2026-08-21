@@ -2,6 +2,7 @@ const CATEGORY_LABELS = {
   pantalones: 'Pantalones',
   polerones: 'Polerones',
   poleras: 'Poleras',
+  zapatillas: 'Zapatillas',
   accesorios: 'Accesorios'
 };
 
@@ -110,6 +111,7 @@ uploadForm.addEventListener('submit', async (e) => {
   const price = document.getElementById('price').value.trim();
   const description = document.getElementById('description').value.trim();
   const inStock = document.getElementById('inStock').checked;
+  const stockQty = document.getElementById('stockQty').value.trim();
 
   if (!file || !name || !category) {
     uploadError.textContent = 'Falta la foto, el nombre o la categoría.';
@@ -124,6 +126,7 @@ uploadForm.addEventListener('submit', async (e) => {
   formData.append('price', price);
   formData.append('description', description);
   formData.append('in_stock', inStock ? 'true' : 'false');
+  formData.append('stock_qty', stockQty);
 
   uploadBtn.disabled = true;
   uploadBtn.textContent = 'Subiendo…';
@@ -206,9 +209,20 @@ function buildRow(product) {
   price.className = 'row-price';
   price.textContent = product.price ? `$${product.price}` : 'Sin precio';
 
+  const stockBadge = document.createElement('span');
+  stockBadge.className = 'row-stock-badge';
+  if (product.stock_qty !== null && product.stock_qty !== undefined && product.stock_qty !== '') {
+    stockBadge.textContent = `Stock: ${product.stock_qty}`;
+    stockBadge.classList.add(product.stock_qty > 0 ? 'badge-ok' : 'badge-low');
+  } else {
+    stockBadge.textContent = 'Sin cantidad';
+    stockBadge.classList.add('badge-none');
+  }
+
   info.appendChild(cat);
   info.appendChild(name);
   info.appendChild(price);
+  info.appendChild(stockBadge);
   if (product.description) {
     const LIMIT = 60;
     const isLong = product.description.length > LIMIT;

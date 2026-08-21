@@ -1,6 +1,6 @@
 import { requireAuth } from '../_utils/auth.js';
 
-const VALID_CATEGORIES = ['pantalones', 'polerones', 'poleras', 'accesorios'];
+const VALID_CATEGORIES = ['pantalones', 'polerones', 'poleras', 'zapatillas', 'accesorios'];
 
 // GET /api/products?category=pantalones  -> público, cualquiera puede ver el catálogo
 export async function onRequestGet({ request, env }) {
@@ -10,11 +10,11 @@ export async function onRequestGet({ request, env }) {
   let stmt;
   if (category && VALID_CATEGORIES.includes(category)) {
     stmt = env.DB.prepare(
-      'SELECT id, name, category, price, description, image_key, in_stock, created_at FROM products WHERE category = ?1 ORDER BY created_at DESC'
+      'SELECT id, name, category, price, description, image_key, in_stock, stock_qty, created_at FROM products WHERE category = ?1 ORDER BY created_at DESC'
     ).bind(category);
   } else {
     stmt = env.DB.prepare(
-      'SELECT id, name, category, price, description, image_key, in_stock, created_at FROM products ORDER BY created_at DESC'
+      'SELECT id, name, category, price, description, image_key, in_stock, stock_qty, created_at FROM products ORDER BY created_at DESC'
     );
   }
 
@@ -50,6 +50,8 @@ export async function onRequestPost({ request, env }) {
   const price = (form.get('price') || '').toString().trim();
   const description = (form.get('description') || '').toString().trim();
   const inStock = form.get('in_stock') === 'true' ? 1 : 0;
+  const stockQtyRaw = (form.get('stock_qty') || '').toString().trim();
+  const stockQty = stockQtyRaw !== '' && !isNaN(stockQtyRaw) ? parseInt(stockQtyRaw, 10) : null;
   const file = form.get('image');
 
   if (!name || !VALID_CATEGORIES.includes(category) || !(file instanceof File)) {
@@ -76,10 +78,10 @@ export async function onRequestPost({ request, env }) {
   });
 
   await env.DB.prepare(
-    `INSERT INTO products (id, name, category, price, description, image_key, in_stock, created_at)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`
+    `INSERT INTO products (id, name, category, price, description, image_key, in_stock, stock_qty, created_at)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)`
   )
-    .bind(id, name, category, price, description, imageKey, inStock, Date.now())
+    .bind(id, name, category, price, description, imageKey, inStock, stockQty, Date.now())
     .run();
 
   return new Response(JSON.stringify({ ok: true, id }), {

@@ -2,6 +2,7 @@ const CATEGORY_LABELS = {
   pantalones: 'Pantalones',
   polerones: 'Polerones',
   poleras: 'Poleras',
+  zapatillas: 'Zapatillas',
   accesorios: 'Accesorios'
 };
 
@@ -111,6 +112,13 @@ function buildCard(product) {
   price.className = 'card-price';
   price.textContent = product.price ? `$${product.price}` : 'Consultar';
   row.appendChild(price);
+
+  if (product.stock_qty !== null && product.stock_qty !== undefined && product.stock_qty !== '') {
+    const stockTag = document.createElement('span');
+    stockTag.className = 'card-stock' + (product.stock_qty > 0 ? ' stock-ok' : ' stock-low');
+    stockTag.textContent = product.stock_qty > 0 ? `${product.stock_qty} disponibles` : 'Quedan pocos';
+    row.appendChild(stockTag);
+  }
 
   body.appendChild(row);
 

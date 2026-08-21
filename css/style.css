@@ -236,6 +236,27 @@ img {
   font-weight: 700;
 }
 
+.card-stock {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.card-stock.stock-ok {
+  background: rgba(79, 214, 122, 0.12);
+  color: #4fd67a;
+  border: 1px solid rgba(79, 214, 122, 0.25);
+}
+
+.card-stock.stock-low {
+  background: rgba(255, 140, 50, 0.12);
+  color: #ff8c32;
+  border: 1px solid rgba(255, 140, 50, 0.25);
+}
+
 .card-desc {
   font-size: 12px;
   color: var(--text-muted);
@@ -345,6 +366,7 @@ footer a:hover {
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 select,
 textarea {
   background: var(--surface);
@@ -616,6 +638,35 @@ textarea {
 .row-price {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+.row-stock-badge {
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.row-stock-badge.badge-ok {
+  background: rgba(79, 214, 122, 0.1);
+  color: #4fd67a;
+  border: 1px solid rgba(79, 214, 122, 0.2);
+}
+
+.row-stock-badge.badge-low {
+  background: rgba(255, 140, 50, 0.1);
+  color: #ff8c32;
+  border: 1px solid rgba(255, 140, 50, 0.2);
+}
+
+.row-stock-badge.badge-none {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
 }
 
 .row-desc {
