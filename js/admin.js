@@ -269,16 +269,27 @@ function buildRow(product) {
   label.appendChild(toggle);
   label.appendChild(track);
 
+  const editBtn = document.createElement('button');
+  editBtn.type = 'button';
+  editBtn.className = 'row-edit';
+  editBtn.textContent = 'Editar';
+  editBtn.addEventListener('click', () => openEditModal(product));
+
   const delBtn = document.createElement('button');
   delBtn.type = 'button';
   delBtn.className = 'row-delete';
   delBtn.textContent = 'Eliminar';
   delBtn.addEventListener('click', () => deleteProduct(product.id, row));
 
+  const actions = document.createElement('div');
+  actions.className = 'row-actions';
+  actions.appendChild(editBtn);
+  actions.appendChild(delBtn);
+
   row.appendChild(img);
   row.appendChild(info);
   row.appendChild(label);
-  row.appendChild(delBtn);
+  row.appendChild(actions);
   return row;
 }
 
@@ -310,5 +321,80 @@ async function deleteProduct(id, rowEl) {
 }
 
 filterCategory.addEventListener('change', renderList);
+
+/* ---------------- Edit modal ---------------- */
+
+const editModal = document.getElementById('editModal');
+const editForm = document.getElementById('editForm');
+const editError = document.getElementById('editError');
+const editSuccess = document.getElementById('editSuccess');
+const editSaveBtn = document.getElementById('editSaveBtn');
+
+function openEditModal(product) {
+  document.getElementById('editId').value = product.id;
+  document.getElementById('editName').value = product.name;
+  document.getElementById('editCategory').value = product.category;
+  document.getElementById('editPrice').value = product.price || '';
+  document.getElementById('editDescription').value = product.description || '';
+  document.getElementById('editStockQty').value = (product.stock_qty !== null && product.stock_qty !== undefined) ? product.stock_qty : '';
+  document.getElementById('editInStock').checked = !!product.in_stock;
+  editError.hidden = true;
+  editSuccess.hidden = true;
+  editModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  document.getElementById('editName').focus();
+}
+
+function closeEditModal() {
+  editModal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+document.getElementById('editModalClose').addEventListener('click', closeEditModal);
+document.getElementById('editCancelBtn').addEventListener('click', closeEditModal);
+editModal.addEventListener('click', (e) => { if (e.target === editModal) closeEditModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !editModal.hidden) closeEditModal(); });
+
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  editError.hidden = true;
+  editSuccess.hidden = true;
+
+  const id = document.getElementById('editId').value;
+  const name = document.getElementById('editName').value.trim();
+  const category = document.getElementById('editCategory').value;
+  const price = document.getElementById('editPrice').value.trim();
+  const description = document.getElementById('editDescription').value.trim();
+  const inStock = document.getElementById('editInStock').checked;
+  const stockQtyRaw = document.getElementById('editStockQty').value.trim();
+  const stockQty = stockQtyRaw !== '' && !isNaN(stockQtyRaw) ? parseInt(stockQtyRaw, 10) : null;
+
+  editSaveBtn.disabled = true;
+  editSaveBtn.textContent = 'Guardando…';
+
+  try {
+    const res = await fetch(`/api/products/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, category, price, description, in_stock: inStock, stock_qty: stockQty })
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Error al guardar');
+    }
+    // Update local cache
+    const p = products.find((x) => x.id === id);
+    if (p) Object.assign(p, { name, category, price, description, in_stock: inStock, stock_qty: stockQty });
+    editSuccess.hidden = false;
+    renderList();
+    setTimeout(closeEditModal, 900);
+  } catch (err) {
+    editError.textContent = err.message;
+    editError.hidden = false;
+  } finally {
+    editSaveBtn.disabled = false;
+    editSaveBtn.textContent = 'Guardar cambios';
+  }
+});
 
 checkSession();

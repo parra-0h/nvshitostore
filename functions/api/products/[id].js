@@ -1,6 +1,6 @@
 import { requireAuth } from '../../_utils/auth.js';
 
-const VALID_CATEGORIES = ['pantalones', 'polerones', 'poleras', 'accesorios'];
+const VALID_CATEGORIES = ['pantalones', 'polerones', 'poleras', 'zapatillas', 'accesorios'];
 
 // PATCH /api/products/:id  -> solo admin. Actualiza cualquier combinación de campos.
 export async function onRequestPatch({ request, env, params }) {
@@ -41,6 +41,10 @@ export async function onRequestPatch({ request, env, params }) {
   if (typeof body.category === 'string' && VALID_CATEGORIES.includes(body.category)) {
     fields.push('category = ?');
     values.push(body.category);
+  }
+  if (body.stock_qty === null || (typeof body.stock_qty === 'number' && !isNaN(body.stock_qty))) {
+    fields.push('stock_qty = ?');
+    values.push(body.stock_qty === null ? null : Math.max(0, Math.floor(body.stock_qty)));
   }
 
   if (fields.length === 0) {
