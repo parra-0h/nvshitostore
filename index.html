@@ -15,15 +15,57 @@
     <img src="/brand/logo.jpeg" alt="" class="brand-logo">
     <img src="/brand/name-logo.jpeg" alt="Nvshitostore" class="brand-name-logo">
   </a>
-  <nav class="cat-nav" id="catNav">
+  <div class="topbar-right">
+    <button class="nav-action" id="menuToggle" aria-label="Menú">
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <line x1="0" y1="1" x2="15" y2="1"/>
+        <line x1="0" y1="5.5" x2="15" y2="5.5"/>
+        <line x1="0" y1="10" x2="15" y2="10"/>
+      </svg>
+      <span>MENÚ</span>
+    </button>
+    <div class="nav-divider"></div>
+    <button class="nav-action" id="searchToggle" aria-label="Buscar">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="6.5" cy="6.5" r="5"/>
+        <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+      </svg>
+      <span>BUSCAR</span>
+    </button>
+    <div class="nav-divider"></div>
+    <a href="https://instagram.com/nvshitostore" target="_blank" rel="noopener" class="nav-action nav-ig" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- Category filter sub-nav -->
+<nav class="cat-bar" id="catNav">
+  <div class="cat-bar-inner">
     <button data-cat="" class="active">Todo</button>
     <button data-cat="pantalones">Pantalones</button>
     <button data-cat="polerones">Polerones</button>
     <button data-cat="poleras">Poleras</button>
     <button data-cat="zapatillas">Zapatillas</button>
     <button data-cat="accesorios">Accesorios</button>
-  </nav>
-</header>
+  </div>
+</nav>
+
+<!-- Search bar (hidden by default) -->
+<div class="search-bar" id="searchBar" hidden>
+  <div class="search-bar-inner">
+    <svg width="16" height="16" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <circle cx="6.5" cy="6.5" r="5"/>
+      <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
+    <button class="search-close" id="searchClose" aria-label="Cerrar búsqueda">✕</button>
+  </div>
+</div>
 
 <main>
   <section class="hero">

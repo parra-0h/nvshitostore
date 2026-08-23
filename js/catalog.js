@@ -12,6 +12,40 @@ const navButtons = document.querySelectorAll('#catNav button');
 
 let allProducts = [];
 let activeCategory = '';
+let searchQuery = '';
+
+// ---- Search bar toggle ----
+const searchToggle = document.getElementById('searchToggle');
+const searchBar = document.getElementById('searchBar');
+const searchInput = document.getElementById('searchInput');
+const searchClose = document.getElementById('searchClose');
+
+if (searchToggle && searchBar && searchInput) {
+  searchToggle.addEventListener('click', () => {
+    searchBar.hidden = !searchBar.hidden;
+    if (!searchBar.hidden) {
+      searchInput.focus();
+    } else {
+      searchQuery = '';
+      searchInput.value = '';
+      render();
+    }
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    render();
+  });
+
+  if (searchClose) {
+    searchClose.addEventListener('click', () => {
+      searchBar.hidden = true;
+      searchQuery = '';
+      searchInput.value = '';
+      render();
+    });
+  }
+}
 
 async function loadProducts() {
   try {
@@ -27,9 +61,16 @@ async function loadProducts() {
 }
 
 function render() {
-  const items = activeCategory
+  let items = activeCategory
     ? allProducts.filter((p) => p.category === activeCategory)
     : allProducts;
+
+  if (searchQuery) {
+    items = items.filter((p) =>
+      p.name.toLowerCase().includes(searchQuery) ||
+      (p.category && p.category.toLowerCase().includes(searchQuery))
+    );
+  }
 
   grid.innerHTML = '';
   emptyState.hidden = items.length > 0;
@@ -41,8 +82,10 @@ function render() {
 }
 
 function buildCard(product) {
-  const card = document.createElement('article');
+  const card = document.createElement('a');
+  card.href = `/product.html?id=${product.id}`;
   card.className = 'card' + (product.in_stock ? '' : ' is-out');
+  card.style.textDecoration = 'none';
 
   const media = document.createElement('div');
   media.className = 'card-media';
@@ -71,56 +114,20 @@ function buildCard(product) {
   name.className = 'card-name';
   name.textContent = product.name;
 
-  if (product.description) {
-    const LIMIT = 80;
-    const isLong = product.description.length > LIMIT;
-
-    const desc = document.createElement('p');
-    desc.className = 'card-desc expanded';
-    desc.textContent = isLong
-      ? product.description.slice(0, LIMIT).trimEnd() + '…'
-      : product.description;
-
-    body.appendChild(cat);
-    body.appendChild(name);
-    body.appendChild(desc);
-
-    if (isLong) {
-      const toggle = document.createElement('button');
-      toggle.className = 'desc-toggle';
-      toggle.textContent = 'Ver más';
-      let open = false;
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        open = !open;
-        desc.textContent = open
-          ? product.description
-          : product.description.slice(0, LIMIT).trimEnd() + '…';
-        toggle.textContent = open ? 'Ver menos' : 'Ver más';
-      });
-      body.appendChild(toggle);
-    }
-  } else {
-    body.appendChild(cat);
-    body.appendChild(name);
-  }
-
-  const row = document.createElement('div');
-  row.className = 'card-row';
-
-  const price = document.createElement('span');
+  const price = document.createElement('div');
   price.className = 'card-price';
   price.textContent = product.price ? `$${product.price}` : 'Consultar';
-  row.appendChild(price);
+
+  body.appendChild(cat);
+  body.appendChild(name);
+  body.appendChild(price);
 
   if (product.stock_qty !== null && product.stock_qty !== undefined && product.stock_qty !== '') {
     const stockTag = document.createElement('span');
     stockTag.className = 'card-stock' + (product.stock_qty > 0 ? ' stock-ok' : ' stock-low');
     stockTag.textContent = product.stock_qty > 0 ? `${product.stock_qty} disponibles` : 'Quedan pocos';
-    row.appendChild(stockTag);
+    // Optionally append stock tag
   }
-
-  body.appendChild(row);
 
   card.appendChild(media);
   card.appendChild(body);
