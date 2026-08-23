@@ -606,16 +606,18 @@ textarea {
 .admin-main {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 32px 28px 80px 28px;
+  padding: 16px 16px 80px 16px;
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 28px;
+  grid-template-columns: 1fr;
+  gap: 20px;
   align-items: start;
 }
 
-@media (max-width: 860px) {
+@media (min-width: 860px) {
   .admin-main {
-    grid-template-columns: 1fr;
+    padding: 32px 28px 80px 28px;
+    grid-template-columns: 340px 1fr;
+    gap: 28px;
   }
 }
 
@@ -743,13 +745,23 @@ textarea {
 
 .product-row {
   display: grid;
-  grid-template-columns: 56px 1fr auto auto;
+  grid-template-columns: 56px 1fr;
+  grid-template-areas:
+    "thumb info"
+    "switch actions";
   align-items: center;
   gap: 14px;
-  padding: 10px;
+  padding: 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   transition: opacity .15s ease;
+}
+
+@media (min-width: 600px) {
+  .product-row {
+    grid-template-columns: 56px 1fr auto auto;
+    grid-template-areas: "thumb info switch actions";
+  }
 }
 
 .product-row.is-saving {
@@ -758,6 +770,7 @@ textarea {
 }
 
 .row-thumb {
+  grid-area: thumb;
   width: 56px;
   height: 56px;
   object-fit: cover;
@@ -766,6 +779,7 @@ textarea {
 }
 
 .row-info {
+  grid-area: info;
   min-width: 0;
 }
 
@@ -885,14 +899,17 @@ textarea {
 }
 
 .row-actions {
+  grid-area: actions;
   display: flex;
   gap: 6px;
   align-items: center;
+  justify-content: flex-end;
   flex-shrink: 0;
 }
 
 /* Switch */
 .switch {
+  grid-area: switch;
   position: relative;
   display: inline-block;
   width: 42px;
