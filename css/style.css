@@ -366,11 +366,10 @@ img {
   }
   .carousel-caption {
     font-size: 18px;
+    width: 95%; /* Use more space since arrows are gone */
   }
   .carousel-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    margin: 0 8px;
+    display: none;
   }
   .carousel-dots {
     bottom: 16px;
