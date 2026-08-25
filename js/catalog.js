@@ -144,3 +144,43 @@ navButtons.forEach((btn) => {
 });
 
 loadProducts();
+
+// ---- Hero Carousel ----
+const carouselTrack = document.getElementById('carouselTrack');
+const carouselPrev = document.getElementById('carouselPrev');
+const carouselNext = document.getElementById('carouselNext');
+const carouselDots = document.querySelectorAll('#carouselDots .dot');
+
+if (carouselTrack && carouselPrev && carouselNext && carouselDots.length > 0) {
+  let currentSlide = 0;
+  const slideCount = carouselDots.length;
+
+  function updateCarousel() {
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    carouselDots.forEach(d => d.classList.remove('active'));
+    carouselDots[currentSlide].classList.add('active');
+  }
+
+  carouselPrev.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+    updateCarousel();
+  });
+
+  carouselNext.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slideCount;
+    updateCarousel();
+  });
+
+  carouselDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      currentSlide = parseInt(e.target.dataset.index, 10);
+      updateCarousel();
+    });
+  });
+  
+  // Auto-slide every 5 seconds
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slideCount;
+    updateCarousel();
+  }, 5000);
+}
