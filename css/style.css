@@ -266,35 +266,51 @@ img {
   min-width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .carousel-images {
   display: flex;
   width: 100%;
+  height: clamp(380px, 65vh, 700px);
 }
 
 .carousel-images img {
   width: 50%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
 }
 
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
 .carousel-caption {
-  padding: 16px 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
   text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-  background: var(--surface-2);
-  letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.9);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .carousel-btn {
   position: absolute;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
-  background: rgba(10, 10, 10, 0.6);
+  background: rgba(10, 10, 10, 0.4);
   border: none;
   color: white;
   padding: 12px 16px;
@@ -304,6 +320,7 @@ img {
   font-size: 18px;
   transition: background 0.2s, transform 0.2s;
   backdrop-filter: blur(4px);
+  z-index: 10;
 }
 
 .carousel-btn:hover {
@@ -321,11 +338,12 @@ img {
 
 .carousel-dots {
   position: absolute;
-  bottom: 60px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  z-index: 10;
 }
 
 .carousel-dots .dot {
@@ -343,9 +361,11 @@ img {
 }
 
 @media (max-width: 767px) {
+  .carousel-images {
+    height: clamp(300px, 55vh, 500px);
+  }
   .carousel-caption {
-    font-size: 14px;
-    padding: 12px 16px;
+    font-size: 18px;
   }
   .carousel-btn {
     padding: 8px 12px;
@@ -353,7 +373,7 @@ img {
     margin: 0 8px;
   }
   .carousel-dots {
-    bottom: 50px;
+    bottom: 16px;
   }
 }
 
